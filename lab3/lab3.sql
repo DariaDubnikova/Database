@@ -1,59 +1,59 @@
---1. INSERT
--- 1. Без указания списка полей
+п»ї--1. INSERT
+-- 1. Р‘РµР· СѓРєР°Р·Р°РЅРёСЏ СЃРїРёСЃРєР° РїРѕР»РµР№
 INSERT INTO storage VALUES (1, 'Nice storage', 'Russia, Yoshkar-Ola, Kalinina, 3', 3000, 1);
--- 2. С указанием списка полей
+-- 2. РЎ СѓРєР°Р·Р°РЅРёРµРј СЃРїРёСЃРєР° РїРѕР»РµР№
 INSERT INTO product (name, price) VALUES ('fish', 400);
--- 3. С чтением значения из другой таблицы
+-- 3. РЎ С‡С‚РµРЅРёРµРј Р·РЅР°С‡РµРЅРёСЏ РёР· РґСЂСѓРіРѕР№ С‚Р°Р±Р»РёС†С‹
 INSERT INTO product_in_storage(id_owner) SELECT id_owner FROM owner;
 
 --2. DELETE
--- 1. Всех записей
+-- 1. Р’СЃРµС… Р·Р°РїРёСЃРµР№
 DELETE FROM factory;
--- 2. По условию
+-- 2. РџРѕ СѓСЃР»РѕРІРёСЋ
 DELETE FROM product WHERE price > 500;
--- 3. Очистить таблицу
+-- 3. РћС‡РёСЃС‚РёС‚СЊ С‚Р°Р±Р»РёС†Сѓ
 TRUNCATE TABLE owner;
 
 --3. UPDATE
--- 1. Всех записей
+-- 1. Р’СЃРµС… Р·Р°РїРёСЃРµР№
 UPDATE factory
 SET name = 'Progress';
--- 2. По условию обновляя один атрибут
+-- 2. РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РѕРґРёРЅ Р°С‚СЂРёР±СѓС‚
 UPDATE factory
 SET phone = '89657439506' WHERE name = 'Color';
--- 3. По условию обновляя несколько атрибутов
+-- 3. РџРѕ СѓСЃР»РѕРІРёСЋ РѕР±РЅРѕРІР»СЏСЏ РЅРµСЃРєРѕР»СЊРєРѕ Р°С‚СЂРёР±СѓС‚РѕРІ
 UPDATE product_in_storage
 SET quantity = 49, id_product = '3' WHERE delivery_date = '2020-05-08';
 
 
 --4. SELECT
--- 1. С определенным набором извлекаемых атрибутов
+-- 1. РЎ РѕРїСЂРµРґРµР»РµРЅРЅС‹Рј РЅР°Р±РѕСЂРѕРј РёР·РІР»РµРєР°РµРјС‹С… Р°С‚СЂРёР±СѓС‚РѕРІ
 SELECT name, address FROM storage;
--- 2. Со всеми атрибутами
+-- 2. РЎРѕ РІСЃРµРјРё Р°С‚СЂРёР±СѓС‚Р°РјРё
 SELECT * FROM owner;
--- 3. С условием по атрибуту
+-- 3. РЎ СѓСЃР»РѕРІРёРµРј РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ
 SELECT * FROM product WHERE name = 'fish';
 
 
 --5. SELECT ORDER BY + TOP (LIMIT)
--- 1. С сортировкой по возрастанию ASC + ограничение вывода количества записей
+-- 1. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ ASC + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT TOP 5 * FROM factory ORDER BY name ASC;
--- 2. С сортировкой по убыванию DESC
+-- 2. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ СѓР±С‹РІР°РЅРёСЋ DESC
 SELECT * FROM product ORDER BY price DESC;
--- 3. С сортировкой по двум атрибутам + ограничение вывода количества записей
+-- 3. РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РґРІСѓРј Р°С‚СЂРёР±СѓС‚Р°Рј + РѕРіСЂР°РЅРёС‡РµРЅРёРµ РІС‹РІРѕРґР° РєРѕР»РёС‡РµСЃС‚РІР° Р·Р°РїРёСЃРµР№
 SELECT TOP 4 * FROM owner ORDER BY first_name, last_name DESC;
--- 4.  С сортировкой по первому атрибуту, из списка извлекаемых
+-- 4.  РЎ СЃРѕСЂС‚РёСЂРѕРІРєРѕР№ РїРѕ РїРµСЂРІРѕРјСѓ Р°С‚СЂРёР±СѓС‚Сѓ, РёР· СЃРїРёСЃРєР° РёР·РІР»РµРєР°РµРјС‹С…
 SELECT name, capacity FROM storage ORDER BY 1;
 
 
---6. Работа с датами. Необходимо, чтобы одна из таблиц содержала атрибут с типом DATETIME.
--- 1. WHERE по дате
+--6. Р Р°Р±РѕС‚Р° СЃ РґР°С‚Р°РјРё. РќРµРѕР±С…РѕРґРёРјРѕ, С‡С‚РѕР±С‹ РѕРґРЅР° РёР· С‚Р°Р±Р»РёС† СЃРѕРґРµСЂР¶Р°Р»Р° Р°С‚СЂРёР±СѓС‚ СЃ С‚РёРїРѕРј DATETIME.
+-- 1. WHERE РїРѕ РґР°С‚Рµ
 SELECT id_storage FROM product_in_storage WHERE delivery_date = '2019-03-15T00:00:00';
--- 2. Извлечь из таблицы не всю дату, а только год
+-- 2. РР·РІР»РµС‡СЊ РёР· С‚Р°Р±Р»РёС†С‹ РЅРµ РІСЃСЋ РґР°С‚Сѓ, Р° С‚РѕР»СЊРєРѕ РіРѕРґ
 SELECT YEAR(delivery_date) from product_in_storage;
 
 
---7. SELECT GROUP BY с функциями агрегации
+--7. SELECT GROUP BY СЃ С„СѓРЅРєС†РёСЏРјРё Р°РіСЂРµРіР°С†РёРё
 -- 1. MIN
 SELECT name, MIN(price) AS min_price FROM product GROUP BY name;
 -- 2. MAX
@@ -76,23 +76,23 @@ SELECT name, MIN(capacity) FROM storage WHERE id_storage < 6 GROUP BY name HAVIN
 
 
 --9. SELECT JOIN
--- 1. LEFT JOIN двух таблиц и WHERE по одному из атрибутов
+-- 1. LEFT JOIN РґРІСѓС… С‚Р°Р±Р»РёС† Рё WHERE РїРѕ РѕРґРЅРѕРјСѓ РёР· Р°С‚СЂРёР±СѓС‚РѕРІ
 SELECT * FROM product_in_storage LEFT JOIN product ON product_in_storage.id_product = product.id_product WHERE product.price > 50;
 
--- 2. RIGHT JOIN. Получить такую же выборку, как и в 9.1
+-- 2. RIGHT JOIN. РџРѕР»СѓС‡РёС‚СЊ С‚Р°РєСѓСЋ Р¶Рµ РІС‹Р±РѕСЂРєСѓ, РєР°Рє Рё РІ 9.1
 SELECT * FROM product RIGHT JOIN product_in_storage ON product_in_storage.id_product = product.id_product WHERE product.price > 50 ORDER BY name ASC;
 
--- 3. LEFT JOIN трех таблиц + WHERE по атрибуту из каждой таблицы
+-- 3. LEFT JOIN С‚СЂРµС… С‚Р°Р±Р»РёС† + WHERE РїРѕ Р°С‚СЂРёР±СѓС‚Сѓ РёР· РєР°Р¶РґРѕР№ С‚Р°Р±Р»РёС†С‹
 SELECT * FROM product_in_storage LEFT JOIN storage ON product_in_storage.id_storage = storage.id_storage
 LEFT JOIN product on product_in_storage.id_product = product.id_product
 WHERE product.name = 'fish' and storage.name = 'Seven sea' and product_in_storage.quantity = 40;
 
--- 4. FULL OUTER JOIN двух таблиц
+-- 4. FULL OUTER JOIN РґРІСѓС… С‚Р°Р±Р»РёС†
 SELECT * FROM product_in_storage FULL OUTER JOIN product ON product_in_storage.id_product = product.id_product
 
 
---10. Подзапросы
--- 1. Написать запрос с WHERE IN (подзапрос)
+--10. РџРѕРґР·Р°РїСЂРѕСЃС‹
+-- 1. РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ СЃ WHERE IN (РїРѕРґР·Р°РїСЂРѕСЃ)
 SELECT * FROM product WHERE id_product IN (SELECT id_product FROM product_in_storage);
--- 2. Написать запрос SELECT atr1, atr2, (подзапрос) FROM ...
+-- 2. РќР°РїРёСЃР°С‚СЊ Р·Р°РїСЂРѕСЃ SELECT atr1, atr2, (РїРѕРґР·Р°РїСЂРѕСЃ) FROM ...
 SELECT name, (SELECT MIN(price) FROM product) FROM product;
