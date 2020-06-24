@@ -68,11 +68,11 @@ SELECT name, COUNT(price) AS count_price FROM product GROUP BY name;
 
 --8. SELECT GROUP BY + HAVING
 -- 1.
-SELECT id_product FROM product_in_storage GROUP BY id_product HAVING COUNT(*) < 7;
+SELECT id_product, COUNT (id_storage) storage_count FROM product_in_storage GROUP BY id_product HAVING COUNT(id_storage) <= 3;
 -- 2.
 SELECT name, MIN(price) AS min_price FROM product GROUP BY name HAVING MIN(price) < 400;
 -- 3.
-SELECT name, MIN(capacity) FROM storage WHERE id_storage < 6 GROUP BY name HAVING MIN(capacity) > 1000;
+SELECT name, MAX(capacity) AS max_capacity FROM storage WHERE id_storage < 6 GROUP BY name HAVING MAX(capacity) > 1000;
 
 
 --9. SELECT JOIN
@@ -88,11 +88,11 @@ LEFT JOIN product on product_in_storage.id_product = product.id_product
 WHERE product.name = 'fish' and storage.name = 'Seven sea' and product_in_storage.quantity = 40;
 
 -- 4. FULL OUTER JOIN двух таблиц
-SELECT * FROM product_in_storage FULL OUTER JOIN product ON product_in_storage.id_product = product.id_product
+SELECT * FROM product FULL OUTER JOIN product_in_storage ON product_in_storage.id_product = product.id_product
 
 
 --10. Подзапросы
 -- 1. Написать запрос с WHERE IN (подзапрос)
 SELECT * FROM product WHERE id_product IN (SELECT id_product FROM product_in_storage);
 -- 2. Написать запрос SELECT atr1, atr2, (подзапрос) FROM ...
-SELECT name, (SELECT MIN(price) FROM product) FROM product;
+SELECT name, address (SELECT name FROM owner WHERE storage.id_owner = owner.id_owner) FROM storage;
